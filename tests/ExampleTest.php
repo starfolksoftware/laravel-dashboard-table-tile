@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\MyTile\Tests;
+namespace StarfolkSoftware\TableTile\Tests;
 
 use PHPUnit\Framework\TestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\MyTile;
+namespace StarfolkSoftware\TableTile;
 
 use Illuminate\Console\Command;
 

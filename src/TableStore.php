@@ -1,10 +1,10 @@
 <?php
 
-namespace Vendor\MyTile;
+namespace StarfolkSoftware\TableTile;
 
 use Spatie\Dashboard\Models\Tile;
 
-class MyStore
+class TableStore
 {
     private Tile $tile;
 

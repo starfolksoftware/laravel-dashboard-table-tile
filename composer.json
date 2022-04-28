@@ -1,17 +1,17 @@
 {
-    "name": ":vendor/:package_name",
-    "description": ":package_description",
+    "name": "starfolksoftware/laravel-dashboard-table-tile",
+    "description": "A tile for displaying a table in spatie's laravel dashboard.",
     "keywords": [
-        ":vendor",
-        ":package_name"
+        "starfolksoftware",
+        "laravel-dashboard-table-tile"
     ],
-    "homepage": "https://github.com/:vendor/:package_name",
+    "homepage": "https://github.com/starfolksoftware/laravel-dashboard-table-tile",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": "https://:vendor.be",
+            "name": "Faruk Nasir",
+            "email": "faruk@starfolksoftware.com",
+            "homepage": "https://starfolksoftware.com",
             "role": "Developer"
         }
     ],
@@ -24,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\MyTile\\": "src"
+            "StarfolkSoftware\\TableTile\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\MyTile\\Tests\\": "tests"
+            "StarfolkSoftware\\TableTile\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -43,7 +43,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\MyTile\\MyTileServiceProvider"
+                "StarfolkSoftware\\TableTile\\TableTileServiceProvider"
             ]
         }
     },
