@@ -167,6 +167,7 @@ If you discover any security related issues, please email :author_email instead 
 
 ## Credits
 
+- [Faruk Nasir](https://github.com/frknasir)
 - [All Contributors](../../contributors)
 
 ## License
