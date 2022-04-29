@@ -1,6 +1,3 @@
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
-
 # Laravel Dashboard Table Tile
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/starfolksoftware/laravel-dashboard-table-tile.svg?style=flat-square)](https://packagist.org/packages/starfolksoftware/laravel-dashboard-table-tile)
@@ -21,11 +18,132 @@ composer require starfolksoftware/laravel-dashboard-table-tile
 
 ## Usage
 
-In your dashboard view you use the `livewire:my-tile` component.
+In the dashboard config file, you can optionally add this configuration in the tiles key.
+
+```php
+'tiles' => [
+    // ...
+    'tables' => [
+        'refresh_interval_in_seconds' => 300, // Default: 300 seconds (5 minutes)
+    ],
+],
+```
+
+See a table example below:
+
+```php
+<?php
+
+namespace App\Tables;
+
+use StarfolkSoftware\TableTile\Table;
+
+class ExampleTableTile extends Table
+{
+    /**
+     * Get the title of the table.
+     * 
+     * @return string
+     */
+    protected function getTitle()
+    {
+        return 'Example Table Tile';
+    }
+
+    /**
+     * Get the description of the table.
+     * 
+     * @return string
+     */
+    protected function getDescription()
+    {
+        return 'This is an example table tile.';
+    }
+
+    /**
+     * Get the columns to be displayed in the table.
+     * 
+     * @return array
+     */
+    protected function getColumns()
+    {
+        return [
+            'name' => [
+                'label' => 'Name',
+            ],
+            'email' => [
+                'label' => 'Email',
+            ],
+            'gender' => [
+                'label' => 'Gender',
+            ],
+            'status' => [
+                'label' => 'Status',
+            ],
+        ];
+    }
+
+    /**
+     * Get the rows to be displayed in the table.
+     * 
+     * @return array
+     */
+    protected function getRows()
+    {
+        $faker = \Faker\Factory::create();
+
+        return collect(range(1, 100))->map(function ($i) use ($faker) {
+            return [
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'gender' => $faker->randomElement(['male', 'female']),
+                'status' => $faker->randomElement(['paid', 'unpaid']),
+            ];
+        });
+    }
+
+    /**
+     * Get the filters to be applied to the table.
+     * 
+     * @return array
+     */
+    protected function getAvailableFilters()
+    {
+        return [
+            'gender' => [
+                'label' => 'Gender',
+                'values' => [
+                    'male',
+                    'female',
+                ],
+            ],
+            'status' => [
+                'label' => 'Status',
+                'values' => [
+                    'paid',
+                    'unpaid'
+                ],
+            ]
+        ];
+    }
+
+    /**
+     * Get the columns that can be searched.
+     * 
+     * @return array
+     */
+    protected function getSearchableColumns()
+    {
+        return ['name', 'email'];
+    }
+}
+```
+
+In your dashboard view you use the `livewire:table-tile` component.
 
 ```html
 <x-dashboard>
-    <livewire:my-tile position="e7:e16" />
+    <livewire:table-tile position="e7:e16" />
 </x-dashboard>
 ```
 

@@ -1,7 +1,7 @@
 <x-dashboard-tile :position="$position">
     <div class="border border-gray-300 rounded-lg h-full">
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-            <div class="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-nowrap">
+            <div class="-ml-4 -mt-4 flex justify-between items-center">
                 <div class="ml-4 mt-4">
                     <h3 class="text-lg leading-6 font-medium text-gray-900">
                         {{ $table->title }}
@@ -10,7 +10,7 @@
                         {{ $table->description }}
                     </p>
                 </div>
-                <div class="ml-4 mt-4 flex-shrink-0">
+                <div class="mr-4 mt-4">
                     <div class="mt-4 sm:mt-0 sm:ml-16 flex space-x-1">
                         <div>
                             <div class="relative rounded-md">
