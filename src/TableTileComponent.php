@@ -6,12 +6,41 @@ use Livewire\Component;
 
 class TableTileComponent extends Component
 {
-    public $position;
+    /**
+     * The component's state.
+     *
+     * @var array
+     */
+    public $state = [
+        'query' => '',
+    ];
 
+    /**
+     * The position of the table tile.
+     * 
+     * @var string
+     */
+    public string $position;
+
+    /**
+     * The class of the table.
+     * 
+     * @var string
+     */
     public string $tableClass;
 
+    /**
+     * The filters that should be applied to the table.
+     * 
+     * @var array
+     */
     public array $tableFilters;
 
+    /**
+     * The refresh interval.
+     * 
+     * @var int
+     */
     public int $refreshIntervalInSeconds;
 
 

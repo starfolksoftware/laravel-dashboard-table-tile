@@ -40,6 +40,13 @@ abstract class Table
     public $filters = [];
 
     /**
+     * The columns that can be searched.
+     * 
+     * @var array
+     */
+    public $searchableColumns = [];
+
+    /**
      * Instantiate a new Table instance.
      * 
      * @return void
@@ -51,6 +58,7 @@ abstract class Table
         $this->columns = $this->getColumns();
         $this->rows = $this->getRows();
         $this->filters = $this->getFilters();
+        $this->searchableColumns = $this->getSearchableColumns();   
     }
 
     /**
@@ -89,5 +97,25 @@ abstract class Table
     protected function getFilters()
     {
         return [];
+    }
+
+    /**
+     * Get the columns that can be searched.
+     * 
+     * @return array
+     */
+    protected function getSearchableColumns()
+    {
+        return [];
+    }
+
+    /**
+     * Filter the table.
+     * 
+     * @return void
+     */
+    public function filter()
+    {
+        
     }
 }
