@@ -14,7 +14,7 @@
                     <div class="mt-4 sm:mt-0 sm:ml-16 flex space-x-1">
                         <div>
                             <div class="relative rounded-md">
-                                <input wire:model.defer="state.query" type="search" name="search" id="search" class="border focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-10 px-4 py-2 sm:text-sm border-gray-300 rounded-md" placeholder="Start typing...">
+                                <input wire:model="state.query" type="search" name="search" id="search" class="border focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-10 px-4 py-2 sm:text-sm border-gray-300 rounded-md" placeholder="Start typing...">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
@@ -30,11 +30,22 @@
                                     </svg>
                                 </button>
                             </div>
-                            <div x-show="open" x-transition @click.outside="open = false" class="origin-top-right absolute right-0 mt-2 w-56 border border-gray-300 rounded-md shadow bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                                <div class="py-1" role="none">
-                                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
+                            <div x-show="open" x-transition class="origin-top-right absolute right-0 mt-2 w-56 border border-gray-300 rounded-md shadow bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                @foreach ($table->availableFilters as $filterKey => $filter)
+                                <div class="px-4 py-4 space-y-1" role="none">
+                                    <h1 class="text-base font-medium">
+                                        {{ $filter['label'] }}
+                                    </h1>
+                                    @foreach ($filter['values'] as $value)
+                                    <div class="flex items-center">
+                                        <input wire:model="state.filters.{{$filterKey}}" id="filter-{{$filterKey}}-{{$value}}" name="{{$filterKey}}[]" value="{{$value}}" type="checkbox" class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                        <label for="filter-{{$filterKey}}-{{$value}}" class="ml-3 text-sm text-gray-500">
+                                            {{ $value }}
+                                        </label>
+                                    </div>
+                                    @endforeach
                                 </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

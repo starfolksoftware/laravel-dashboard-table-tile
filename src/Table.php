@@ -33,11 +33,11 @@ abstract class Table
     public $rows;
 
     /**
-     * The filters to be applied to the table.
+     * The filters that can be applied to the table.
      * 
      * @var array
      */
-    public $filters = [];
+    public $availableFilters = [];
 
     /**
      * The columns that can be searched.
@@ -49,16 +49,26 @@ abstract class Table
     /**
      * Instantiate a new Table instance.
      * 
+     * @param array $currentFilters
+     * @param string $searchQuery
      * @return void
      */
-    public function __construct()
+    public function __construct(array $currentFilters = [], string $searchQuery = '')
     {
         $this->title = $this->getTitle();
         $this->description = $this->getDescription();
         $this->columns = $this->getColumns();
         $this->rows = $this->getRows();
-        $this->filters = $this->getFilters();
-        $this->searchableColumns = $this->getSearchableColumns();   
+        $this->availableFilters = $this->getAvailableFilters();
+        $this->searchableColumns = $this->getSearchableColumns();
+        
+        if (! empty($currentFilters)) {
+            $this->applyFilters($currentFilters);
+        }
+        
+        if ($searchQuery) {
+            $this->applySearchQuery($searchQuery);
+        }
     }
 
     /**
@@ -94,7 +104,7 @@ abstract class Table
      * 
      * @return array
      */
-    protected function getFilters()
+    protected function getAvailableFilters()
     {
         return [];
     }
@@ -110,12 +120,42 @@ abstract class Table
     }
 
     /**
-     * Filter the table.
+     * Apply the filters to the table.
      * 
+     * @param array $currentFilters
      * @return void
      */
-    public function filter()
+    protected function applyFilters(array $currentFilters)
     {
-        
+        if (empty($currentFilters)) {
+            return;
+        }
+
+        collect($this->availableFilters)->each(function ($filter, $key) use ($currentFilters) {
+            if (!empty($currentFilters[$key])) {
+                $this->rows = collect($this->rows)->filter(function ($row) use ($key, $currentFilters) {
+                    return in_array($row[$key], $currentFilters[$key]);
+                });
+            }
+        });
+    }
+
+    /**
+     * Apply search to the table.
+     * 
+     * @param string $query
+     * @return void
+     */
+    protected function applySearchQuery(string $query)
+    {
+        if (! $query) {
+            return;
+        }
+
+        $this->rows = collect($this->rows)->filter(function ($row) use ($query) {
+            return collect($this->searchableColumns)->contains(function ($column) use ($row, $query) {
+                return str_contains($row[$column], $query);
+            });
+        });
     }
 }

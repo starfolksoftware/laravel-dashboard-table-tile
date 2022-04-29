@@ -13,6 +13,7 @@ class TableTileComponent extends Component
      */
     public $state = [
         'query' => '',
+        'filters' => [],
     ];
 
     /**
@@ -30,13 +31,6 @@ class TableTileComponent extends Component
     public string $tableClass;
 
     /**
-     * The filters that should be applied to the table.
-     * 
-     * @var array
-     */
-    public array $tableFilters;
-
-    /**
      * The refresh interval.
      * 
      * @var int
@@ -46,16 +40,20 @@ class TableTileComponent extends Component
 
     public function mount(
         string $position,
-        string $tableClass,
-        array $tableFilters = [],
+        string $tableClass = null,
         int $refreshIntervalInSeconds = null
     )
     {
         $this->position = $position;
-        $this->tableClass = $tableClass;
-        $this->tableFilters = $tableFilters;
+        $this->tableClass = $tableClass ?? DefaultTable::class;
         $this->refreshIntervalInSeconds = $refreshIntervalInSeconds ?? 
             config('dashboard.tiles.tables.refresh_interval_in_seconds');
+
+        $table = new $this->tableClass();
+
+        $this->state['filters'] = collect($table->availableFilters)->mapWithKeys(function ($filter, $key) {
+            return [$key => []];
+        })->toArray();
     }
     
     
@@ -63,7 +61,10 @@ class TableTileComponent extends Component
     {
         return view('dashboard-table-tiles::tile', [
             'wireId' => $this->id,
-            'table' => new $this->tableClass,
+            'table' => new $this->tableClass(
+                $this->state['filters'],
+                $this->state['query'],
+            ),
         ]);
     }
 }

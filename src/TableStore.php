@@ -8,14 +8,26 @@ class TableStore
 {
     private Tile $tile;
 
-    public static function make()
+    /**
+     * Create a new instance of the TableStore.
+     * 
+     * @param string $tileName
+     * @return $this
+     */
+    public static function make(string $tileName)
     {
-        return new static();
+        return new static($tileName);
     }
 
-    public function __construct()
+    /**
+     * Instantiate a new TableStore instance.
+     * 
+     * @param string $tileName
+     * @return void
+     */
+    public function __construct(string $tileName)
     {
-        $this->tile = Tile::firstOrCreateForName("myTileName");
+        $this->tile = Tile::firstOrCreateForName($tileName);
     }
 
     public function setData(array $data): self
