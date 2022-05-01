@@ -26,9 +26,9 @@
                             {{ $this->filter_count }} Filters
                         </button>
                     </div>
-                    <div class="pl-6">
-                        <a href="{{ request()->url() }}" class="text-gray-500">Clear all</a>
-                    </div>
+                    <!-- <div class="pl-6">
+                        <a class="text-gray-500">Clear all</a>
+                    </div> -->
                 </div>
             </div>
             <div x-show="open" x-transition class="h-56 overflow-y-auto border-t border-gray-200 py-10" id="disclosure-1">
