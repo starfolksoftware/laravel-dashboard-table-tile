@@ -30,15 +30,15 @@ class TableStore
         $this->tile = Tile::firstOrCreateForName($tileName);
     }
 
-    public function setData(array $data): self
+    public function setData(array $data, string $key = 'data'): self
     {
-        $this->tile->putData('key', $data);
+        $this->tile->putData($key, $data);
 
         return $this;
     }
 
-    public function getData(): array
+    public function getData(string $key = 'data'): array
     {
-        return$this->tile->getData('key') ?? [];
+        return$this->tile->getData($key) ?? [];
     }
 }
