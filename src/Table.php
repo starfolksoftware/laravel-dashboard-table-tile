@@ -153,8 +153,8 @@ abstract class Table
         }
 
         $this->rows = collect($this->rows)->filter(function ($row) use ($query) {
-            return collect($this->searchableColumns)->contains(function ($column) use ($row, $query) {
-                return str_contains($row[$column], $query);
+            return collect($this->searchableColumns)->some(function ($column) use ($row, $query) {
+                return str_contains(str($row[$column])->lower(), str($query)->lower());
             });
         });
     }

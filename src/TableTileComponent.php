@@ -55,7 +55,13 @@ class TableTileComponent extends Component
             return [$key => []];
         })->toArray();
     }
-    
+
+    public function getFilterCountProperty()
+    {
+        return collect($this->state['filters'])->map(function ($filter) {
+            return count($filter);
+        })->sum();
+    }
     
     public function render()
     {
