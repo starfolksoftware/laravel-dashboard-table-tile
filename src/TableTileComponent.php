@@ -37,7 +37,21 @@ class TableTileComponent extends Component
      */
     public int $refreshIntervalInSeconds;
 
+    /**
+     * The table instance.
+     * 
+     * @var mixed
+     */
+    protected $table;
 
+    /**
+     * Mounts the component
+     * 
+     * @param string $position
+     * @param string $tableClass
+     * @param int $refreshIntervalInSeconds
+     * @return void
+     */
     public function mount(
         string $position,
         string $tableClass = null,
@@ -54,13 +68,38 @@ class TableTileComponent extends Component
         $this->state['filters'] = collect($table->availableFilters)->mapWithKeys(function ($filter, $key) {
             return [$key => []];
         })->toArray();
+
+        $this->table = new $this->tableClass(
+            $this->state['filters'],
+            $this->state['query'],
+        );
     }
 
+    /**
+     * Calculates current filters count.
+     * 
+     * @return int
+     */
     public function getFilterCountProperty()
     {
         return collect($this->state['filters'])->map(function ($filter) {
             return count($filter);
         })->sum();
+    }
+
+    /**
+     * Runs when the filters are updated.
+     * 
+     * @param mixed $value
+     * @param mixed $key
+     * @return void
+     */
+    public function updatedState($value, $key)
+    {
+        $this->table = new $this->tableClass(
+            $this->state['filters'],
+            $this->state['query'],
+        );
     }
     
     public function render()

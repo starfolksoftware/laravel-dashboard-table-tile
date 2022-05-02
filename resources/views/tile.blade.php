@@ -18,7 +18,7 @@
             <div class="relative col-start-1 row-start-1 py-4">
                 <div class="max-w-7xl mx-auto flex space-x-6 divide-x divide-gray-200 text-sm px-4 sm:px-6 lg:px-8">
                     <div>
-                        <button @click="open = ! open" type="button" class="group text-gray-700 font-medium flex items-center" aria-controls="disclosure-1" aria-expanded="false">
+                        <button @click="open = ! open; $refs.disclosure.classList.remove('hidden')" type="button" class="group text-gray-700 font-medium flex items-center" aria-controls="disclosure-1" aria-expanded="false">
                             <!-- Heroicon name: solid/filter -->
                             <svg class="flex-none w-5 h-5 mr-2 text-gray-400 group-hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
@@ -26,12 +26,12 @@
                             {{ $this->filter_count }} Filters
                         </button>
                     </div>
-                    <!-- <div class="pl-6">
-                        <a class="text-gray-500">Clear all</a>
-                    </div> -->
+                    <div wire:loading.inline wire:target="state" class="pl-6">
+                        Loading...
+                    </div>
                 </div>
             </div>
-            <div x-show="open" x-transition class="h-56 overflow-y-auto border-t border-gray-200 py-10" id="disclosure-1">
+            <div x-show="open" x-transition x-ref="disclosure" class="hidden h-56 overflow-y-auto border-t border-gray-200 py-10" id="disclosure-1">
                 <div class="relative max-w-7xl mx-auto gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
                     <div class="flex justify-evenly">
                         @foreach ($table->availableFilters as $filterKey => $filter)
@@ -66,11 +66,11 @@
             </div>
         </section>
         <div class="px-4 h-full overflow-auto">
-            <div class="flex flex-col mb-16">
+            <div class="flex flex-col mb-40">
                 <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full py-2 align-middle">
-                        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5">
-                            <table class="min-w-full divide-y divide-gray-300">
+                        <div class="">
+                            <table wire:loading.remove wire:target="state" class="min-w-full divide-y divide-gray-300">
                                 <thead class="bg-gray-50">
                                     <tr>
                                         @foreach($table->columns as $column)
@@ -78,8 +78,9 @@
                                         <th scope="col" class="py-4 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                                             {{ $column['label'] }}
                                         </th>
-                                        @else
-                                        <th scope="col" class="px-3 py-4 text-left text-sm font-semibold text-gray-900">
+                                        @endif
+                                        @if ($loop->last)
+                                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             {{ $column['label'] }}
                                         </th>
                                         @endif
@@ -89,17 +90,20 @@
                                 <tbody class="divide-y divide-gray-200 bg-white">
                                     @foreach($table->rows as $row)
                                     <tr class="odd:bg-white even:bg-gray-100">
-                                        @foreach($table->columns as $columnKey => $columnValue)
-                                        @if ($loop->first)
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                            {{ $row[$columnKey] }}
+                                        <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
+                                            {{ collect($row)->first() }}
+                                            <dl class="font-normal">
+                                                @foreach($table->columns as $columnKey => $columnValue)
+                                                @if (!$loop->last)
+                                                <dt class="sr-only">{{ $columnValue['label'] }}</dt>
+                                                <dd class="mt-1 truncate text-gray-700">{{ $row[$columnKey] }}</dd>
+                                                @endif
+                                                @endforeach
+                                            </dl>
                                         </td>
-                                        @else
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            {{ $row[$columnKey] }}
+                                        <td class="px-3 py-4 text-sm text-gray-500">
+                                            {{ collect($row)->last() }}
                                         </td>
-                                        @endif
-                                        @endforeach
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -107,6 +111,27 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div wire:loading wire:target="state" class="relative w-full flex flex-col justify-center text-center">
+                <svg class="w-16 h-16 ml-auto mr-auto" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                    <style>
+                        @keyframes loader9 {
+                            0% {
+                                transform: translateY(0)
+                            }
+
+                            to {
+                                transform: translateY(-6px);
+                                fill: #0a0a30
+                            }
+                        }
+                    </style>
+                    <path stroke="#0A0A30" stroke-linecap="round" stroke-width="1.5" d="M10 15.749h4" />
+                    <path fill="#265BFF" d="M10.5 12h3v3h-3z" style="animation:loader9 1s cubic-bezier(.72,.08,.38,.87) alternate infinite both" />
+                </svg>
+                <span class="text-base text-gray-400 italic">
+                    Updating data...
+                </span>
             </div>
         </div>
     </div>
