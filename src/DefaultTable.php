@@ -56,7 +56,7 @@ class DefaultTable extends Table
     {
         $faker = \Faker\Factory::create();
 
-        return collect(range(1, 100))->map(function ($i) use ($faker) {
+        return collect(range(1, 1000))->map(function ($i) use ($faker) {
             return [
                 'name' => $faker->name,
                 'email' => $faker->email,
