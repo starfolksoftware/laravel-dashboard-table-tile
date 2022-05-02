@@ -94,7 +94,7 @@
                                             {{ collect($row)->first() }}
                                             <dl class="font-normal">
                                                 @foreach($table->columns as $columnKey => $columnValue)
-                                                @if (!$loop->last)
+                                                @if (!$loop->last && !$loop->first)
                                                 <dt class="sr-only">{{ $columnValue['label'] }}</dt>
                                                 <dd class="mt-1 truncate text-gray-700">{{ $row[$columnKey] }}</dd>
                                                 @endif
@@ -102,7 +102,7 @@
                                             </dl>
                                         </td>
                                         <td class="px-3 py-4 text-sm text-gray-500">
-                                            {{ collect($row)->last() }}
+                                            {{ $row[collect($table->columns)->keys()->last()] }}
                                         </td>
                                     </tr>
                                     @endforeach
