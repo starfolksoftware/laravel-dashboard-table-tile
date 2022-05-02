@@ -1,5 +1,5 @@
 <x-dashboard-tile :position="$position">
-    <div class="border border-gray-300 rounded-lg h-full">
+    <div class="border border-gray-300 rounded-lg h-full w-full">
         <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
             <div class="-ml-4 -mt-4 flex justify-between items-center">
                 <div class="ml-4 mt-4">
@@ -67,7 +67,7 @@
         </section>
         <div class="px-4 h-full overflow-auto">
             <div class="flex flex-col mb-40">
-                <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="-my-2 -mx-4 overflow-x-hidden">
                     <div class="inline-block min-w-full py-2 align-middle">
                         <div class="">
                             <table wire:loading.remove wire:target="state" class="min-w-full divide-y divide-gray-300">
@@ -91,7 +91,7 @@
                                     @foreach($table->rows as $row)
                                     <tr class="odd:bg-white even:bg-gray-100">
                                         <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                                            {{ collect($row)->first() }}
+                                            {{ $row[collect($table->columns)->keys()->first()] }}
                                             <dl class="font-normal">
                                                 @foreach($table->columns as $columnKey => $columnValue)
                                                 @if (!$loop->last && !$loop->first)
@@ -112,7 +112,7 @@
                     </div>
                 </div>
             </div>
-            <div wire:loading wire:target="state" class="relative w-full flex flex-col justify-center text-center">
+            <div wire:loading wire:target="state" class="w-full flex flex-col text-center">
                 <svg class="w-16 h-16 ml-auto mr-auto" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
                     <style>
                         @keyframes loader9 {
