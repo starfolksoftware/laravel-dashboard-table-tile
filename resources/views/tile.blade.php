@@ -92,10 +92,10 @@
                                     <tr class="odd:bg-white even:bg-gray-100">
                                         <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
                                             {{ $row[collect($table->columns)->keys()->first()] }}
-                                            <dl class="font-normal">
+                                            <dl class="font-normal space-y-2">
                                                 @foreach($table->columns as $columnKey => $columnValue)
                                                 @if (!$loop->last && !$loop->first)
-                                                <div class="space-y-1">
+                                                <div>
                                                     <dt class="text-sm font-medium text-gray-500">{{ $columnValue['label'] }}</dt>
                                                     <dd class="mt-1 text-sm text-gray-900">{{ $row[$columnKey] }}</dd>
                                                 </div>
