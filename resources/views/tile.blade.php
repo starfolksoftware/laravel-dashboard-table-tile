@@ -13,7 +13,7 @@
             </div>
         </div>
         <!-- Filters -->
-        @if (!empty($table->searchColumns) || !empty($table->availableFilters))
+        @if (!empty($table->searchableColumns) || !empty($table->availableFilters))
         <section x-data="{ open: false }" aria-labelledby="filter-heading" class="relative z-10 border-t border-b border-gray-200 grid items-center">
             <h2 id="filter-heading" class="sr-only">Filters</h2>
             @if (!empty($table->availableFilters))
@@ -55,7 +55,7 @@
                 </div>
             </div>
             @endif
-            @if (!empty($table->searchColumns))
+            @if (!empty($table->searchableColumns))
             <div class="col-start-1 row-start-1 py-4">
                 <div class="flex justify-end max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="relative inline-block rounded-md">
