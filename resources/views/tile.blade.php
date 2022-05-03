@@ -95,8 +95,10 @@
                                             <dl class="font-normal">
                                                 @foreach($table->columns as $columnKey => $columnValue)
                                                 @if (!$loop->last && !$loop->first)
-                                                <dt class="sr-only">{{ $columnValue['label'] }}</dt>
-                                                <dd class="mt-1 truncate text-gray-700">{{ $row[$columnKey] }}</dd>
+                                                <div class="space-y-1">
+                                                    <dt class="text-sm font-medium text-gray-500">{{ $columnValue['label'] }}</dt>
+                                                    <dd class="mt-1 text-sm text-gray-900">{{ $row[$columnKey] }}</dd>
+                                                </div>
                                                 @endif
                                                 @endforeach
                                             </dl>
