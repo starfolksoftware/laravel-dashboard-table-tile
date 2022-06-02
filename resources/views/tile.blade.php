@@ -11,6 +11,19 @@
                     </p>
                 </div>
             </div>
+            <div class="block mt-1">
+                @if (count($table->rows) > 0)
+                <p class="text-sm text-gray-700">
+                    Showing
+                    <span class="font-medium">1</span>
+                    to
+                    <span class="font-medium">{{ count($table->rows) }}</span>
+                    of
+                    <span class="font-medium">{{ count($table->rows) }}</span>
+                    results
+                </p>
+                @endif
+            </div>
         </div>
         <!-- Filters -->
         @if (!empty($table->searchableColumns) || !empty($table->availableFilters))
