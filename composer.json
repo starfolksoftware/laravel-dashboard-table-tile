@@ -18,7 +18,7 @@
     "require": {
         "php": "^8.0|^7.4",
         "fakerphp/faker": "^1.19",
-        "orchestra/testbench": "^7.4",
+        "orchestra/testbench": "^7.4|^8.0",
         "spatie/laravel-dashboard": "^2.0"
     },
     "require-dev": {
