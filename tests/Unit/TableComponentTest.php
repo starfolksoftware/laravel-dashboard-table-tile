@@ -19,13 +19,10 @@ test('component can be rendered', function () {
     /** @var TestableLivewire $result */
     $result = Livewire::test(TableTileComponent::class, ['position' => 'a1']);
 
-    $html = $result->lastRenderedDom;
     $wireId = $result->id();
 
     $result->assertViewHas('tableClass', DefaultTable::class)
         ->assertViewHas('refreshIntervalInSeconds', 300)
-        ->assertViewHas('wireId', $wireId);
-
-    (new ViewAssertion($html))
-        ->contains("Default Table Tile");
+        ->assertViewHas('wireId', $wireId)
+        ->assertSee("Default Table Tile");
 });
