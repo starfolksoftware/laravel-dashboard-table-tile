@@ -17,8 +17,7 @@ test('component can be mounted', function () {
 
 test('component can be rendered', function () {
     /** @var TestableLivewire $result */
-    $result = Livewire::test(TableTileComponent::class, ['position' => 'a1'])
-        ->call('render');
+    $result = Livewire::test(TableTileComponent::class, ['position' => 'a1']);
 
     $html = $result->lastRenderedDom;
     $wireId = $result->id();
