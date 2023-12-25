@@ -105,7 +105,7 @@ class TableTileComponent extends Component
     public function render()
     {
         return view('dashboard-table-tiles::tile', [
-            'wireId' => $this->id,
+            'wireId' => $this->id(),
             'table' => new $this->tableClass(
                 $this->state['filters'],
                 $this->state['query'],
